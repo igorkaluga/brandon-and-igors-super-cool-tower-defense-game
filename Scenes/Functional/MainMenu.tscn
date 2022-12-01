@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/UI/Menu.png" type="Texture" id=1]
+[ext_resource path="res://Assets/UI/buttonLong_beige.png" type="Texture" id=2]
+[ext_resource path="res://Assets/UI/buttonLong_beige_pressed.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/buttonLong_blue.png" type="Texture" id=4]
+[ext_resource path="res://Assets/UI/buttonLong_blue_pressed.png" type="Texture" id=5]
+[ext_resource path="res://Resources/BaseTheme.tres" type="Theme" id=6]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 6 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = -50.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 1220.0
+margin_right = 1820.0
+margin_bottom = 980.0
+rect_min_size = Vector2( 600, 0 )
+size_flags_horizontal = 8
+custom_constants/separation = 50
+alignment = 1
+
+[node name="NewGame" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+margin_left = 125.0
+margin_top = 390.0
+margin_right = 475.0
+margin_bottom = 465.0
+rect_min_size = Vector2( 350, 75 )
+size_flags_horizontal = 4
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+expand = true
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/NewGame"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "New Game"
+align = 1
+valign = 1
+
+[node name="ExitGame" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+margin_left = 125.0
+margin_top = 515.0
+margin_right = 475.0
+margin_bottom = 590.0
+rect_min_size = Vector2( 350, 75 )
+size_flags_horizontal = 4
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+expand = true
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ExitGame"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 6 )
+text = "Exit Game"
+align = 1
+valign = 1
