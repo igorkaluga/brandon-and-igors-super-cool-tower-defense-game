@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/UI/UI.gd" type="Script" id=1]
+[ext_resource path="res://Assets/UI/UI_CardPlaceholder.png" type="Texture" id=2]
+[ext_resource path="res://Assets/UI/next.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/pause.png" type="Texture" id=4]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="HUD" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TowerBar" type="HBoxContainer" parent="HUD"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -100.0
+margin_right = 200.0
+rect_min_size = Vector2( 400, 100 )
+
+[node name="Frame" type="TextureButton" parent="HUD/TowerBar"]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TowerBar/Frame" groups=["build_buttons"]]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Controls" type="HBoxContainer" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -100.0
+margin_top = -100.0
+rect_min_size = Vector2( 100, 100 )
+
+[node name="PausePlayButton" type="TextureButton" parent="HUD/Controls"]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+expand = true
+
+[connection signal="pressed" from="HUD/Controls/PausePlayButton" to="." method="_on_PausePlayButton_pressed"]
