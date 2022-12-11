@@ -1,39 +1,41 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Assets/Enemies/purblenom-export-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Enemies/resized_plurble.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Enemies/BasicEnemy.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Enemies/EnemyData.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 100, 100 )
+extents = Vector2( 8, 7.5 )
 
-[sub_resource type="AtlasTexture" id=2]
-flags = 4
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 240, 320 )
+region = Rect2( 0, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=3]
-flags = 4
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 1 )
-region = Rect2( 2880, 0, 240, 320 )
+region = Rect2( 16, 0, 16, 16 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"frames": [ SubResource( 5 ), SubResource( 6 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[node name="PathFollow2D" type="PathFollow2D"]
+[node name="PathFollow2D" type="PathFollow2D" groups=["enemies"]]
+physics_interpolation_mode = 2
+rotate = false
 script = ExtResource( 2 )
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+[node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=["enemies"]]
+script = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
-position = Vector2( 0, 55 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D" groups=["enemies"]]
 shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 4 )
+frame = 1
 speed_scale = 0.25
 playing = true
