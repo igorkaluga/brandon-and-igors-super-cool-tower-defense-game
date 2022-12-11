@@ -7,10 +7,16 @@ var build_valid = false
 var build_tile
 var build_location
 var build_type
+var build_cost
 
 var current_wave = 0
 var enemies_in_wave = 0
+
+signal game_over
 signal wave_end
+
+var health = 100
+
 
 func _ready():
 	#Load the UI to the game
@@ -24,6 +30,10 @@ func _ready():
 		i.connect("pressed", self, "initiate_build_mode", [i.get_name()])
 		print("Available towers loaded:")
 		print(i.get_name())
+	
+	# Set Health and Money
+	$UI.update_health(health)
+	$UI.update_money()
 	
 func _process(delta):
 	if build_mode:
@@ -45,26 +55,33 @@ func start_next_wave():
 func retrieve_wave_data():
 	var wave_data = [["BasicEnemy", 1.0], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5]]
 #	current_wave += 1
+#	var wave_data = [["BasicEnemy", 1.0]]
 	enemies_in_wave = wave_data.size()
 	return wave_data
 	
 func spawn_enemies(wave_data):
 	for i in wave_data:
 		var new_enemy = load("res://Scenes/Enemies/" + i[0] + ".tscn").instance()
-		new_enemy.connect("enemyCount", self, "on_enemy_death")
+		new_enemy.connect("enemy_death", self, "on_enemy_death")
+		new_enemy.connect("path_complete", self, "on_path_complete")
 		map_node.get_node("Path2D").add_child(new_enemy, true)
 		yield(get_tree().create_timer(i[1]), "timeout")
 	
-func on_enemy_death():
+func on_enemy_death(enemy_value):
 	enemies_in_wave -= 1
 	print(enemies_in_wave)
+	GameData.money += enemy_value
+	$UI.update_money()
 	if enemies_in_wave == 0:
 		print("WAVE OVER")
 		emit_signal("wave_end")
-#		get_tree().paused = true
 	
 # Building Func
 func initiate_build_mode(tower_type):
+	build_cost = GameData.towers[tower_type].Cost
+	if build_cost > GameData.money:
+		return
+		
 	if build_mode:
 		cancel_build_mode()
 	build_type = tower_type
@@ -91,7 +108,7 @@ func cancel_build_mode():
 	get_node("UI/TowerPreview").free()
 	
 func verify_and_build():
-	if build_valid:
+	if build_valid and GameData.money >= build_cost:
 		var new_tower = load("res://Scenes/Towers/" + build_type + ".tscn").instance()
 		print("BUILDING ", new_tower)
 		new_tower.position = build_location
@@ -101,3 +118,15 @@ func verify_and_build():
 		# The 2 in this refers to a transparent tile that disallows multiple towers to be placed at once
 		# Todo: Find a better way to do this lol
 		map_node.get_node("TowerExclusion").set_cellv(build_tile, 2)
+		
+		GameData.money -= build_cost
+		$UI.update_money()
+
+func on_path_complete(damage):
+	health -= damage
+	print(health)
+	if health <= 0:
+		$UI.update_health(health)
+		emit_signal("game_over")
+	else:
+		$UI.update_health(health)

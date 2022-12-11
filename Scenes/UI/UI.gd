@@ -23,7 +23,7 @@ func set_tower_preview(tower_type, mouse_position):
 	drag_tower.modulate = Color("b905c523")
 	
 	var range_texture = Sprite.new()
-#	range_texture.position = Vector2(16,16)
+	range_texture.position = Vector2(8,8)
 	var scaling = drag_tower.get_node("Range/CollisionShape2D").shape.radius / 300.0
 	var texture = load("res://Assets/Towers/range_overlay.png")
 	range_texture.scale = Vector2(scaling, scaling)
@@ -47,6 +47,14 @@ func update_tower_preview(new_position, color):
 func on_wave_end():
 	$HUD/TextureRect/MarginContainer/VBoxContainer/Controls/PausePlayButton.pressed = false
 
+func update_health(new_health):
+	var health_bar = $HUD/TextureRect/MarginContainer/VBoxContainer/Info/HealthContainer/Health
+	health_bar.text = String(new_health)
+	
+func update_money():
+	var money_count = $HUD/TextureRect/MarginContainer/VBoxContainer/Info/MoneyContainer/Money
+	money_count.text = String(GameData.money)
+
 func _on_PausePlayButton_pressed():
 	var gamescene = get_tree().get_root().find_node("GameScene", true, false)
 	gamescene.connect("wave_end", self, "on_wave_end")
@@ -58,9 +66,8 @@ func _on_PausePlayButton_pressed():
 	else:
 		get_tree().paused = true
 
-# Commented out because I havent built it yet
-#func _on_FastForward_pressed():
-#	if Engine.get_time_scale() == 2.0:
-#		Engine.set_time_scale(1.0)
-#	else:
-#		Engine.set_time_scale(2.0)
+func _on_FastForward_pressed():
+	if Engine.get_time_scale() == 2.0:
+		Engine.set_time_scale(1.0)
+	else:
+		Engine.set_time_scale(2.0)

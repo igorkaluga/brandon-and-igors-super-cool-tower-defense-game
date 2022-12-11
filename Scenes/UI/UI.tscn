@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/UI/UI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/UI_CardPlaceholder.png" type="Texture" id=2]
 [ext_resource path="res://Assets/UI/next.png" type="Texture" id=3]
 [ext_resource path="res://Assets/UI/pause.png" type="Texture" id=4]
+[ext_resource path="res://Resources/BaseTheme.tres" type="Theme" id=5]
 [ext_resource path="res://Assets/UI/UI_SideBarV2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/UI/fastForward.png" type="Texture" id=7]
+[ext_resource path="res://Assets/UI/forward.png" type="Texture" id=8]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -91,10 +94,70 @@ margin_bottom = 16.0
 rect_min_size = Vector2( 16, 16 )
 expand = true
 
-[node name="Controls" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer"]
+[node name="Info" type="ColorRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer"]
+self_modulate = Color( 0, 0, 0, 0.290196 )
 margin_top = 51.0
 margin_right = 56.0
-margin_bottom = 67.0
+margin_bottom = 135.0
+rect_min_size = Vector2( 0, 84 )
+
+[node name="MoneyContainer" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info"]
+anchor_right = 1.0
+margin_bottom = 24.0
+
+[node name="Dollar" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info/MoneyContainer"]
+margin_right = 10.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 16 )
+theme = ExtResource( 5 )
+text = "$"
+align = 2
+valign = 1
+
+[node name="Money" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info/MoneyContainer"]
+margin_left = 14.0
+margin_right = 56.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 42, 16 )
+size_flags_horizontal = 10
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+text = "9999"
+align = 2
+valign = 1
+
+[node name="HealthContainer" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -12.0
+margin_bottom = 12.0
+
+[node name="HP" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info/HealthContainer"]
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 16 )
+theme = ExtResource( 5 )
+text = "HP:"
+align = 2
+valign = 1
+
+[node name="Health" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info/HealthContainer"]
+margin_left = 32.0
+margin_right = 56.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 16 )
+size_flags_horizontal = 10
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+text = "99"
+align = 2
+valign = 1
+
+[node name="Controls" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer"]
+margin_top = 138.0
+margin_right = 56.0
+margin_bottom = 154.0
 rect_min_size = Vector2( 32, 16 )
 custom_constants/separation = 8
 
@@ -110,4 +173,18 @@ texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 4 )
 expand = true
 
+[node name="FastForward" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Controls"]
+pause_mode = 2
+margin_left = 24.0
+margin_right = 40.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 8 )
+expand = true
+
 [connection signal="pressed" from="HUD/TextureRect/MarginContainer/VBoxContainer/Controls/PausePlayButton" to="." method="_on_PausePlayButton_pressed"]
+[connection signal="pressed" from="HUD/TextureRect/MarginContainer/VBoxContainer/Controls/FastForward" to="." method="_on_FastForward_pressed"]

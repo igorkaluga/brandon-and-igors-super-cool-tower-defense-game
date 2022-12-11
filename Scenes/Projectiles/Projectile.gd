@@ -5,6 +5,8 @@ var projectile_speed = 750
 var projectile_hp = 2
 var projectile_damage = 0
 var _target
+var start = Vector2.ZERO
+var max_time = 1.0
 
 func _init(_projectile_speed, _projectile_hp, _projectile_damage):
 	projectile_speed = _projectile_speed
@@ -13,8 +15,16 @@ func _init(_projectile_speed, _projectile_hp, _projectile_damage):
 	
 func _ready():
 	connect("body_entered", self, "_on_Projectile_body_entered")
+	var timer = Timer.new()
+	timer.wait_time = max_time
+	timer.autostart = true
+	add_child(timer)
+	timer.connect("timeout", self, "on_timeout")
 
-func _physics_process(delta):
+func on_timeout():
+	self.queue_free()
+
+func _process(delta):
 	# If there is no active target, go straight 
 	if not _target:
 		position += projectile_speed * Vector2.RIGHT.rotated(velocity.angle()) * delta
@@ -37,6 +47,5 @@ func _on_Projectile_body_entered(area):
 		_target = null
 		projectile_hp -= 1
 		if projectile_hp == 0:
-			print("Projectile destoyed!")
 			self.queue_free()
 		

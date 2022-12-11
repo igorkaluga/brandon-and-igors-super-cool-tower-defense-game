@@ -11,13 +11,16 @@ script = ExtResource( 2 )
 
 [node name="TowerSprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+offset = Vector2( 8, 8 )
 
 [node name="Range" type="Area2D" parent="."]
+position = Vector2( 8, 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
 shape = SubResource( 1 )
 
 [node name="FiringPosition" type="Node2D" parent="."]
+position = Vector2( 8, 8 )
 
 [node name="Position2D" type="Position2D" parent="FiringPosition"]
 

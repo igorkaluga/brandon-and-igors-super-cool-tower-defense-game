@@ -10,6 +10,7 @@ var ready = true
 var tower_range = 50
 var tower_projectile = "res://Scenes/Projectiles/Arrow.tscn"
 var tower_rof = 1
+var tower_cost = 50
 
 # Where the projectile will originate on the tower sprite
 onready var firingPosition = $FiringPosition
@@ -33,7 +34,6 @@ func _physics_process(delta):
 	
 func fire():
 	ready = false
-	print("Firing")
 	$FiringPosition.look_at(enemy.position)
 	var projectile = tower_projectile.instance()
 	get_parent().add_child(projectile)
@@ -56,7 +56,6 @@ func select_enemy():
 func _on_Range_body_entered(body):
 	if body.is_in_group("enemies"):
 		enemy_array.append(body.get_parent())
-		print(enemy_array)
 
 func _on_Range_body_exited(body):
 	if body.is_in_group("enemies"):

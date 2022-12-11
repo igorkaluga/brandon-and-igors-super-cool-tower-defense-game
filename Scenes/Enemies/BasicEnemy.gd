@@ -1,29 +1,24 @@
 extends PathFollow2D
 
 var speed = 50
-signal enemyCount
+var damage = 5
+var value = 5
+signal enemy_death
+signal path_complete
 
 
 func _ready():
 	pass
 
-var hp = 100
-
-#func hit(damage):
-#	hp -= damage
-#	print("Enemy hit")
-#	if hp <= 0:
-#		destroy()
-##		$PathFollow2D.on_destroy()
-##		get.parent().on_destroy()
-
-
 func destroy():
-	print("Enemy destroyed")
 	$KinematicBody2D.queue_free()
 	yield(get_tree().create_timer(0.02), "timeout")
 	self.queue_free()
-	emit_signal("enemyCount")
+	emit_signal("enemy_death", value)
 
 func _physics_process(delta):
+	if unit_offset >= .9:
+		emit_signal("path_complete", damage)
+		queue_free()
+		
 	set_offset(get_offset() + speed * delta)
