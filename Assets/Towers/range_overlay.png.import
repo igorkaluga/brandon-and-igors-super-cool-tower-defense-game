@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/purblenom-export-Sheet.png-64eb8cb7848e896871fbb7cae609695c.stex"
+path="res://.import/range_overlay.png-7ee8c74033da2629c3f7ea80bb117cc4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Enemies/purblenom-export-Sheet.png"
-dest_files=[ "res://.import/purblenom-export-Sheet.png-64eb8cb7848e896871fbb7cae609695c.stex" ]
+source_file="res://Assets/Towers/range_overlay.png"
+dest_files=[ "res://.import/range_overlay.png-7ee8c74033da2629c3f7ea80bb117cc4.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -13,8 +13,8 @@ anchor_bottom = 1.0
 theme = ExtResource( 6 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 1920.0
-margin_bottom = 1080.0
+margin_right = 640.0
+margin_bottom = 360.0
 texture = ExtResource( 1 )
 expand = true
 
@@ -27,21 +27,21 @@ margin_right = -50.0
 margin_bottom = -50.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 1220.0
-margin_right = 1820.0
-margin_bottom = 980.0
-rect_min_size = Vector2( 600, 0 )
+margin_left = 440.0
+margin_right = 540.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 8
 custom_constants/separation = 50
 alignment = 1
 
 [node name="NewGame" type="TextureButton" parent="MarginContainer/VBoxContainer"]
-margin_left = 125.0
-margin_top = 390.0
-margin_right = 475.0
-margin_bottom = 465.0
-rect_min_size = Vector2( 350, 75 )
+margin_top = 65.0
+margin_right = 100.0
+margin_bottom = 105.0
+rect_min_size = Vector2( 100, 40 )
 size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource( 2 )
 texture_pressed = ExtResource( 3 )
 expand = true
@@ -49,17 +49,19 @@ expand = true
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/NewGame"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 4
 text = "New Game"
 align = 1
 valign = 1
+percent_visible = -0.142857
 
 [node name="ExitGame" type="TextureButton" parent="MarginContainer/VBoxContainer"]
-margin_left = 125.0
-margin_top = 515.0
-margin_right = 475.0
-margin_bottom = 590.0
-rect_min_size = Vector2( 350, 75 )
+margin_top = 155.0
+margin_right = 100.0
+margin_bottom = 195.0
+rect_min_size = Vector2( 100, 40 )
 size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 expand = true

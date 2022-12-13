@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TowerSprite.png-4e3ae8fceb67f8ddccd7d37a77e1016e.stex"
+path="res://.import/forward.png-f5f929204064a61a0b814ccda27a4886.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Towers/TowerSprite.png"
-dest_files=[ "res://.import/TowerSprite.png-4e3ae8fceb67f8ddccd7d37a77e1016e.stex" ]
+source_file="res://Assets/UI/forward.png"
+dest_files=[ "res://.import/forward.png-f5f929204064a61a0b814ccda27a4886.stex" ]
 
 [params]
 
