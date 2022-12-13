@@ -10,6 +10,7 @@ var build_type
 var build_cost
 
 var current_wave = 0
+var active_wave = false
 var enemies_in_wave = 0
 
 signal game_over
@@ -48,15 +49,17 @@ func _unhandled_input(event):
 
 # Wave Func
 func start_next_wave():
+	active_wave = true
+	current_wave += 1
+	$UI.update_round(current_wave)
 	var wave_data = retrieve_wave_data()
 	yield(get_tree().create_timer(0.2), "timeout")
 	spawn_enemies(wave_data)
 	
 func retrieve_wave_data():
-	var wave_data = [["BasicEnemy", 1.0], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5]]
-#	current_wave += 1
-#	var wave_data = [["BasicEnemy", 1.0]]
+	var wave_data = WaveHandler.create_wave_data(current_wave)
 	enemies_in_wave = wave_data.size()
+	print(enemies_in_wave)
 	return wave_data
 	
 func spawn_enemies(wave_data):
@@ -69,11 +72,10 @@ func spawn_enemies(wave_data):
 	
 func on_enemy_death(enemy_value):
 	enemies_in_wave -= 1
-	print(enemies_in_wave)
 	GameData.money += enemy_value
 	$UI.update_money()
 	if enemies_in_wave == 0:
-		print("WAVE OVER")
+		active_wave = false
 		emit_signal("wave_end")
 	
 # Building Func
@@ -123,6 +125,7 @@ func verify_and_build():
 		$UI.update_money()
 
 func on_path_complete(damage):
+	Globals.camera.shake(100)
 	health -= damage
 	print(health)
 	if health <= 0:

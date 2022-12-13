@@ -54,14 +54,17 @@ func update_health(new_health):
 func update_money():
 	var money_count = $HUD/TextureRect/MarginContainer/VBoxContainer/Info/MoneyContainer/Money
 	money_count.text = String(GameData.money)
+	
+func update_round(new_round):
+	var current_round = $HUD/TextureRect/MarginContainer/VBoxContainer/Info/RoundContainer/CurrentRound
+	current_round.text = String(new_round)
 
 func _on_PausePlayButton_pressed():
 	var gamescene = get_tree().get_root().find_node("GameScene", true, false)
 	gamescene.connect("wave_end", self, "on_wave_end")
 	if get_tree().is_paused():
 		get_tree().paused = false
-	elif get_parent().current_wave == 0:
-#		get_parent().current_wave += 1
+	elif get_parent().active_wave == false:
 		get_parent().start_next_wave()
 	else:
 		get_tree().paused = true
