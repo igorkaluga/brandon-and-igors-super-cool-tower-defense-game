@@ -9,14 +9,12 @@ var build_location
 var build_type
 var build_cost
 
-var total_waves = 3
+var total_waves = 20
 var active_wave = false
 var enemies_in_wave = 0
 
 signal game_over
 signal wave_end
-
-#var health = 100
 
 
 func _ready():
@@ -62,9 +60,10 @@ func start_next_wave():
 func wave_completed():
 	active_wave = false
 	emit_signal("wave_end")
+	GameData.money += 200
 	if GameData.current_wave == total_waves:
 		$UI.display_message("You won! Heres some cash.")
-		GameData.money += 10000
+		GameData.money += 500
 	
 	
 func retrieve_wave_data():
@@ -126,7 +125,7 @@ func verify_and_build():
 		map_node.get_node("Towers").add_child(new_tower, true)
 		# The 2 in this refers to a transparent tile that disallows multiple towers to be placed at once
 		# Todo: Find a better way to do this lol
-		map_node.get_node("TowerExclusion").set_cellv(build_tile, 2)
+		map_node.get_node("TowerExclusion").set_cellv(build_tile, 9)
 		
 		GameData.money -= build_cost
 
