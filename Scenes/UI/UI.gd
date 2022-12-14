@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+onready var HUD = $HUD
 
 func _ready():
 	# Get list of available towers
@@ -18,7 +19,7 @@ func _ready():
 		i += 1
 
 func set_tower_preview(tower_type, mouse_position):
-	var drag_tower = load("res://Scenes/Towers/" + tower_type + ".tscn").instance()
+	var drag_tower = load(GameData.towers[tower_type].Location).instance()
 	drag_tower.set_name("DragTower")
 	drag_tower.modulate = Color("b905c523")
 	
@@ -47,21 +48,40 @@ func update_tower_preview(new_position, color):
 func on_wave_end():
 	$HUD/TextureRect/MarginContainer/VBoxContainer/Controls/PausePlayButton.pressed = false
 
-func update_health(new_health):
+func update_health():
 	var health_bar = $HUD/TextureRect/MarginContainer/VBoxContainer/Info/HealthContainer/Health
-	health_bar.text = String(new_health)
+	health_bar.text = String(GameData.health)
 	
 func update_money():
 	var money_count = $HUD/TextureRect/MarginContainer/VBoxContainer/Info/MoneyContainer/Money
 	money_count.text = String(GameData.money)
+	
+func update_current_round():
+	var current_round = $HUD/TextureRect/MarginContainer/VBoxContainer/Info/RoundContainer/CurrentRound
+	current_round.text = String(GameData.current_wave)
+	
+func update_total_rounds(total):
+	var total_rounds = $HUD/TextureRect/MarginContainer/VBoxContainer/Info/RoundContainer/TotalRounds
+	total_rounds.text = String(total)
+	
+func update_data():
+	update_money()
+	update_health()
+	update_current_round()
+	
+func display_message(message_contents):
+	var message = load("res://Scenes/UI/Message.tscn").instance()
+	HUD.add_child(message)
+	message.update_message(message_contents)
+#	$GameScene/UI/HUD/MessageBox/Label.update_message(message_contents)
+	
 
 func _on_PausePlayButton_pressed():
 	var gamescene = get_tree().get_root().find_node("GameScene", true, false)
 	gamescene.connect("wave_end", self, "on_wave_end")
 	if get_tree().is_paused():
 		get_tree().paused = false
-	elif get_parent().current_wave == 0:
-#		get_parent().current_wave += 1
+	elif get_parent().active_wave == false:
 		get_parent().start_next_wave()
 	else:
 		get_tree().paused = true

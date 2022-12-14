@@ -9,13 +9,14 @@ var build_location
 var build_type
 var build_cost
 
-var current_wave = 0
+var total_waves = 3
+var active_wave = false
 var enemies_in_wave = 0
 
 signal game_over
 signal wave_end
 
-var health = 100
+#var health = 100
 
 
 func _ready():
@@ -25,19 +26,23 @@ func _ready():
 	var ui = load("res://Scenes/UI/UI.tscn").instance()
 	add_child(ui)
 	
+	$UI.update_total_rounds(total_waves)
 	map_node = get_node("Map1")
 	for i in get_tree().get_nodes_in_group("build_buttons"):
 		i.connect("pressed", self, "initiate_build_mode", [i.get_name()])
 		print("Available towers loaded:")
 		print(i.get_name())
-	
-	# Set Health and Money
-	$UI.update_health(health)
-	$UI.update_money()
-	
+		
+	$UI.display_message("good luck asshole")
+#
 func _process(delta):
+	$UI.update_data()
+	
 	if build_mode:
 		update_tower_preview()
+	if active_wave and enemies_in_wave == 0:
+		wave_completed()
+	
 
 func _unhandled_input(event):
 	if event.is_action_released("ui_accept") and build_mode == true:
@@ -48,15 +53,24 @@ func _unhandled_input(event):
 
 # Wave Func
 func start_next_wave():
+	active_wave = true
+	GameData.current_wave += 1
 	var wave_data = retrieve_wave_data()
 	yield(get_tree().create_timer(0.2), "timeout")
 	spawn_enemies(wave_data)
 	
+func wave_completed():
+	active_wave = false
+	emit_signal("wave_end")
+	if GameData.current_wave == total_waves:
+		$UI.display_message("You won! Heres some cash.")
+		GameData.money += 10000
+	
+	
 func retrieve_wave_data():
-	var wave_data = [["BasicEnemy", 1.0], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5], ["BasicEnemy", 0.5]]
-#	current_wave += 1
-#	var wave_data = [["BasicEnemy", 1.0]]
+	var wave_data = WaveHandler.create_wave_data(GameData.current_wave)
 	enemies_in_wave = wave_data.size()
+	print(enemies_in_wave)
 	return wave_data
 	
 func spawn_enemies(wave_data):
@@ -69,12 +83,7 @@ func spawn_enemies(wave_data):
 	
 func on_enemy_death(enemy_value):
 	enemies_in_wave -= 1
-	print(enemies_in_wave)
 	GameData.money += enemy_value
-	$UI.update_money()
-	if enemies_in_wave == 0:
-		print("WAVE OVER")
-		emit_signal("wave_end")
 	
 # Building Func
 func initiate_build_mode(tower_type):
@@ -120,13 +129,11 @@ func verify_and_build():
 		map_node.get_node("TowerExclusion").set_cellv(build_tile, 2)
 		
 		GameData.money -= build_cost
-		$UI.update_money()
 
 func on_path_complete(damage):
-	health -= damage
-	print(health)
-	if health <= 0:
-		$UI.update_health(health)
+	Globals.camera.shake(100)
+	GameData.health -= damage
+	enemies_in_wave -= 1
+	print(GameData.health)
+	if GameData.health <= 0:
 		emit_signal("game_over")
-	else:
-		$UI.update_health(health)
