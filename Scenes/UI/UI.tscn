@@ -125,7 +125,7 @@ text = "/"
 align = 2
 valign = 1
 
-[node name="CurrentRound2" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info/RoundContainer"]
+[node name="TotalRounds" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info/RoundContainer"]
 margin_left = 36.0
 margin_right = 56.0
 margin_bottom = 24.0

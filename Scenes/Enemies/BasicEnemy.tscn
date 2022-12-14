@@ -26,6 +26,7 @@ animations = [ {
 [node name="PathFollow2D" type="PathFollow2D" groups=["enemies"]]
 physics_interpolation_mode = 2
 rotate = false
+loop = false
 script = ExtResource( 2 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=["enemies"]]
