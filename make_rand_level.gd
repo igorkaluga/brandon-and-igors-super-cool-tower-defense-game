@@ -13,7 +13,7 @@ func make_empty_matrix(height, width):
 	for i in height:
 		matrix_row = []
 		for j in width:
-			matrix_row.append(0)
+			matrix_row.append(" ")
 		empty_matrix.append(matrix_row)
 		
 func get_direction():
@@ -56,19 +56,19 @@ func make_path(matrix, start_tile):
 	# maintains unflipped matrix
 	var original_tile = start_tile
 	
+	var prev_path_dir
+	
 	var gen_map = true
 	var gen_map_cnt = 0
 	
-	while gen_map_cnt < 2:
+	while gen_map_cnt < 6:
 		
 		var path_direction = get_direction()
 		
-		print(path_direction)
+		# check if new path is a reverse of the previous path.
 		
 		random.randomize()
-		var path_length = random.randi_range(3,6)
-		
-		print(path_length)
+		var path_length = random.randi_range(2,4)
 	
 		for i in range(0, path_length):
 				
@@ -83,7 +83,8 @@ func make_path(matrix, start_tile):
 			mark_tile(flipped_arr, matrix, tile_marker)
 			
 			tile_cnt += 1
-		
+			
+		prev_path_dir = path_direction
 		gen_map_cnt += 1
 	
 func _run():
