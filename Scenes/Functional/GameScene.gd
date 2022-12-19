@@ -30,7 +30,13 @@ func _ready():
 	add_towers_to_gamescene()
 		
 	Globals.ui.display_message("good luck asshole")
-#
+
+func sell_tower(tower):
+	GameData.money += tower.TowerValues.tower_cost
+	map_node.get_node("TowerExclusion").set_cellv(tower.build_tile, -1)
+
+	tower.queue_free()
+
 func add_towers_to_gamescene():
 	for i in get_tree().get_nodes_in_group("build_button_available"):
 		i.connect("pressed", self, "initiate_build_mode", [i.get_name()])
@@ -127,8 +133,10 @@ func verify_and_build():
 	if build_valid and GameData.money >= build_cost:
 		var new_tower = load(GameData.towers[build_type].Location).instance()
 		new_tower.position = build_location
+		new_tower.build_tile = build_tile
 		new_tower.built = true
 		new_tower.type = build_type
+		
 		map_node.get_node("Towers").add_child(new_tower, true)
 		# Sets a tile in the TowerExclusion zone so we cant double build
 		map_node.get_node("TowerExclusion").set_cellv(build_tile, 9)

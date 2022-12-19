@@ -1,9 +1,11 @@
 extends CanvasLayer
 
 onready var HUD = $HUD
+var selected_tower
 
 func _ready():
 	Globals.ui = self
+	$HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/ColorRect/TowerSell.connect("pressed", self, "_on_Sell_input_event")
 	add_towers_to_ui()
 
 func add_towers_to_ui():
@@ -22,6 +24,10 @@ func add_towers_to_ui():
 		build_button.set_name(available_towers[i])
 		i += 1
 
+func _on_Sell_input_event():
+	Globals.gamescene.sell_tower(selected_tower)
+	unload_tower_display()
+
 func _on_Information_input_event( viewport, event, shape_idx, tower ):
 	if event.is_action_pressed("ui_accept") and event.pressed:
 		load_tower_display(tower)
@@ -29,16 +35,20 @@ func _on_Information_input_event( viewport, event, shape_idx, tower ):
 func unload_tower_display():
 	for i in get_tree().get_nodes_in_group("TowerInspector"):
 		i.visible = false
+	selected_tower = null
 		
 func load_tower_display(tower):
+	selected_tower = tower
 	for i in get_tree().get_nodes_in_group("TowerInspector"):
+		if i.is_in_group("SellButton") and tower.built == false:
+			continue
 		i.visible = true
 	var TowerIcon = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/AssetFrames/Frame/TowerIcon
 	var TowerProjectile = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/AssetFrames/Frame2/TowerIcon
 	var tower_range = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TowerRange/Value
 	var tower_rof = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TowerROF/Value
 	var projectile_damage = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/ProjectileDamage/Value
-	var tower_value = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TextureButton/ColorRect/Value
+	var tower_value = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/ColorRect/Value
 	var projectile = tower.TowerValues.tower_projectile.instance()
 	TowerIcon.texture = tower.TowerValues.tower_asset
 	TowerProjectile.texture = projectile.projectile_asset
@@ -120,3 +130,4 @@ func _on_FastForward_pressed():
 		Engine.set_time_scale(1.0)
 	else:
 		Engine.set_time_scale(2.0)
+

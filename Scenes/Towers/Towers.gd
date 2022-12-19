@@ -7,6 +7,7 @@ var enemy_array = []
 var enemy
 var built = false
 var ready = true
+var build_tile
 
 # Where the projectile will originate on the tower sprite
 onready var firingPosition = $FiringPosition
