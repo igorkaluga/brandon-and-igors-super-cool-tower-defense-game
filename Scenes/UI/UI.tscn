@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/UI/UI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/UI_CardPlaceholder.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Assets/UI/UI_SideBarV2.png" type="Texture" id=6]
 [ext_resource path="res://Assets/UI/fastForward.png" type="Texture" id=7]
 [ext_resource path="res://Assets/UI/forward.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Fonts/poco10.tres" type="DynamicFont" id=9]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -43,7 +44,7 @@ custom_constants/separation = 3
 
 [node name="TowerBar" type="GridContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer"]
 margin_right = 56.0
-margin_bottom = 48.0
+margin_bottom = 52.0
 rect_min_size = Vector2( 48, 48 )
 custom_constants/vseparation = 2
 custom_constants/hseparation = 4
@@ -94,16 +95,104 @@ margin_bottom = 16.0
 rect_min_size = Vector2( 16, 16 )
 expand = true
 
+[node name="Frame4" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar" groups=["build_buttons"]]
+margin_top = 18.0
+margin_right = 16.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar/Frame4"]
+rect_min_size = Vector2( 16, 16 )
+expand = true
+
+[node name="Frame5" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar" groups=["build_buttons"]]
+margin_left = 20.0
+margin_top = 18.0
+margin_right = 36.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar/Frame5"]
+rect_min_size = Vector2( 16, 16 )
+expand = true
+
+[node name="Frame6" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar" groups=["build_buttons"]]
+margin_left = 40.0
+margin_top = 18.0
+margin_right = 56.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar/Frame6"]
+rect_min_size = Vector2( 16, 16 )
+expand = true
+
+[node name="Frame7" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar" groups=["build_buttons"]]
+margin_top = 36.0
+margin_right = 16.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar/Frame7"]
+rect_min_size = Vector2( 16, 16 )
+expand = true
+
+[node name="Frame8" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar" groups=["build_buttons"]]
+margin_left = 20.0
+margin_top = 36.0
+margin_right = 36.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar/Frame8"]
+rect_min_size = Vector2( 16, 16 )
+expand = true
+
+[node name="Frame9" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar" groups=["build_buttons"]]
+margin_left = 40.0
+margin_top = 36.0
+margin_right = 56.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerBar/Frame9"]
+rect_min_size = Vector2( 16, 16 )
+expand = true
+
 [node name="Info" type="ColorRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer"]
 self_modulate = Color( 0, 0, 0, 0.290196 )
-margin_top = 51.0
+margin_top = 55.0
 margin_right = 56.0
-margin_bottom = 135.0
+margin_bottom = 139.0
 rect_min_size = Vector2( 0, 84 )
 
 [node name="RoundContainer" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info"]
 anchor_right = 1.0
-margin_right = 22.0
+margin_right = 1.0
 margin_bottom = 24.0
 
 [node name="CurrentRound" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/Info/RoundContainer"]
@@ -190,10 +279,191 @@ text = "99"
 align = 2
 valign = 1
 
-[node name="Controls" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer"]
-margin_top = 138.0
+[node name="TowerInfo" type="ColorRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer"]
+self_modulate = Color( 0.282353, 0.141176, 0.0156863, 0.686275 )
+margin_top = 142.0
 margin_right = 56.0
-margin_bottom = 154.0
+margin_bottom = 226.0
+rect_min_size = Vector2( 0, 84 )
+
+[node name="AssetFrames" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo" groups=["TowerInspector"]]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -18.0
+margin_top = 4.0
+margin_right = 18.0
+margin_bottom = 16.0
+
+[node name="Frame" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/AssetFrames"]
+margin_right = 16.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/AssetFrames/Frame"]
+rect_min_size = Vector2( 16, 16 )
+expand = true
+
+[node name="Frame2" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/AssetFrames"]
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="TowerIcon" type="TextureRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/AssetFrames/Frame2"]
+rect_min_size = Vector2( 16, 16 )
+expand = true
+
+[node name="TowerRange" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo" groups=["TowerInspector"]]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -63.0
+margin_bottom = -47.0
+
+[node name="Range" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TowerRange"]
+margin_right = 27.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 8, 16 )
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 9 )
+text = "Range:"
+align = 2
+valign = 1
+
+[node name="Value" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TowerRange"]
+margin_left = 32.0
+margin_right = 56.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 16 )
+size_flags_horizontal = 10
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 9 )
+text = "99"
+align = 2
+valign = 1
+
+[node name="TowerROF" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo" groups=["TowerInspector"]]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -48.0
+margin_bottom = -32.0
+
+[node name="RoF" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TowerROF"]
+margin_right = 17.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 8, 16 )
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 9 )
+text = "RoF:"
+align = 2
+valign = 1
+
+[node name="Value" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TowerROF"]
+margin_left = 32.0
+margin_right = 56.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 16 )
+size_flags_horizontal = 10
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 9 )
+text = "99"
+align = 2
+valign = 1
+
+[node name="ProjectileDamage" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo" groups=["TowerInspector"]]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -33.0
+margin_bottom = -17.0
+
+[node name="Damage" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/ProjectileDamage"]
+margin_right = 18.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 8, 16 )
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 9 )
+text = "Dmg:"
+align = 2
+valign = 1
+
+[node name="Value" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/ProjectileDamage"]
+margin_left = 32.0
+margin_right = 56.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 16 )
+size_flags_horizontal = 10
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 9 )
+text = "99"
+align = 2
+valign = 1
+
+[node name="TextureButton" type="TextureButton" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo" groups=["TowerInspector"]]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -29.0
+margin_top = -14.0
+margin_right = 29.0
+size_flags_horizontal = 5
+size_flags_vertical = 4
+
+[node name="ColorRect" type="ColorRect" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TextureButton"]
+self_modulate = Color( 0.52549, 0.145098, 0.145098, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -21.0585
+margin_top = -7.0
+margin_right = 21.0585
+margin_bottom = 7.0
+
+[node name="Label" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TextureButton/ColorRect"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -7.0
+margin_right = 42.117
+margin_bottom = 7.0
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 9 )
+text = "Sell:"
+
+[node name="Value" type="Label" parent="HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TextureButton/ColorRect"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -24.0
+margin_top = -8.0
+margin_bottom = 8.0
+rect_min_size = Vector2( 24, 16 )
+size_flags_horizontal = 10
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 9 )
+text = "99"
+align = 2
+valign = 1
+
+[node name="Controls" type="HBoxContainer" parent="HUD/TextureRect/MarginContainer/VBoxContainer"]
+margin_top = 229.0
+margin_right = 56.0
+margin_bottom = 245.0
 rect_min_size = Vector2( 32, 16 )
 custom_constants/separation = 8
 

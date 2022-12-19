@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Singletons/TowerData.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Projectiles/Fireball.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Towers/FireTower.png" type="Texture" id=3]
+
+[resource]
+script = ExtResource( 1 )
+tower_range = 75
+tower_projectile = ExtResource( 2 )
+tower_rof = 1.25
+tower_cost = 300
+tower_asset = ExtResource( 3 )
