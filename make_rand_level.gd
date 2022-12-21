@@ -6,6 +6,8 @@ var width
 var matrix_row
 var random = RandomNumberGenerator.new()
 var map_size = 20
+var direction_arr = [[0,1], [1,0], [-1,0], [0,-1]]
+var reverse_direction_arr = [[0,-1], [-1,0], [1,0], [0,1]]
 
 # EMPTY MATRIX VER (1)
 var empty_matrix = []
@@ -39,34 +41,11 @@ func mark_tile(tile_loc, matrix, marker):
 	var y_cord = tile_loc[1]
 	
 	matrix[x_cord][y_cord] = marker
-
-var direction_arr = [[0,1], [1,0], [-1,0], [0,-1]]
-var reverse_direction_arr = [[0,-1], [-1,0], [1,0], [0,1]]
-	
-func check_reverse_dir(prev_dir, cur_dir):
-	# [x,y] coordinates
-	# [up, right, left, down]
-	# [[0,1], [1,0], [-1,0], [0,-1]]
-	if prev_dir != null:
-		var prev_direction_index = direction_arr.find(prev_dir)
-		if reverse_direction_arr[prev_direction_index] == cur_dir:
-			return true
-	return false
 	
 func get_reverse_dir(cur_dir):
 	var reverse_direction_index = direction_arr.find(cur_dir)
 	
 	return reverse_direction_arr[reverse_direction_index]
-	
-func get_valid_dir_arr(invalid_arr):
-	
-	var valid_dir_arr = []
-	
-	for dir in direction_arr:
-		if not dir in invalid_arr:
-			valid_dir_arr.append(dir)
-
-	return valid_dir_arr
 	
 func get_valid_directions(cur_pos, prev_dir, map_size):
 	
@@ -201,8 +180,7 @@ func make_path(matrix, start_tile):
 		print()
 	
 func _run():
-	
-	#print(get_valid_directions([4,4], [1,0], map_size))
+
 	print("\n=============================================")
 	
 	make_empty_matrix(map_size, map_size)
@@ -213,8 +191,28 @@ func _run():
 	print()
 	for row in empty_matrix:
 		print(row)
+		
+		
+		
+### FUNCTIONS NO LONGER IN USE
 
+func check_reverse_dir(prev_dir, cur_dir):
+	""" No longer in use, delete later. Keeping for now just in case """
+	# [x,y] coordinates
+	# [up, right, left, down]
+	# [[0,1], [1,0], [-1,0], [0,-1]]
+	if prev_dir != null:
+		var prev_direction_index = direction_arr.find(prev_dir)
+		if reverse_direction_arr[prev_direction_index] == cur_dir:
+			return true
+	return false
+	
+func get_valid_dir_arr(invalid_arr):
+	""" No longer in use. Keeping just in case. """
+	var valid_dir_arr = []
+	
+	for dir in direction_arr:
+		if not dir in invalid_arr:
+			valid_dir_arr.append(dir)
 
-
-
-
+	return valid_dir_arr
