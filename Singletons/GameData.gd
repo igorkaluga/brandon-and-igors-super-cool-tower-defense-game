@@ -10,10 +10,10 @@ var towers = {
 		"Location": "res://Scenes/Towers/BasicTower.tscn",
 		"Resources": "res://Resources/TowerResources/ArrowTowerData.tres"
 		},
-#	"FireTower": {
-#		"Location": "res://Scenes/Towers/FireTower.tscn",
-#		"Resources": "res://Resources/TowerResources/FireTowerData.tres"
-#		},
+	"FireTower": {
+		"Location": "res://Scenes/Towers/FireTower.tscn",
+		"Resources": "res://Resources/TowerResources/FireTowerData.tres"
+		},
 #	"IceTower": {
 #		"Location": "res://Scenes/Towers/IceTower.tscn",
 #		"Resources": "res://Resources/TowerResources/IceTowerData.tres"

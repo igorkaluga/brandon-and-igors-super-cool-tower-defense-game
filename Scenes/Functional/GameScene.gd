@@ -74,6 +74,7 @@ func wave_completed():
 	print("Wave complete!")
 	emit_signal("wave_end")
 	GameData.money += 200
+	Globals.ui.display_message("Wave Completed!", 0.5)
 	if GameData.current_wave == total_waves:
 		Globals.uidisplay_message("You won! Heres some cash.")
 		GameData.money += 500

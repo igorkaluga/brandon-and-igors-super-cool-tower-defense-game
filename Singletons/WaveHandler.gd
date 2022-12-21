@@ -1,5 +1,7 @@
 extends Node
 
+signal merchant_round
+
 var forest_enemies = {
 	"tier1": {
 		"BasicEnemy": preload("res://Scenes/Enemies/BasicEnemy.tscn"),
@@ -18,7 +20,8 @@ var forest_enemies = {
 
 var npcs = {
 	"merchants": {
-		"RatMerchant": preload("res://Scenes/NPCs/Merchant.tscn")
+		"RatMerchant": preload("res://Scenes/NPCs/Merchant.tscn"),
+		"CarriageMerchant": preload("res://Scenes/NPCs/Carriage.tscn")
 	}
 }
 
@@ -26,6 +29,7 @@ const round_multiplier = 2
 var rng = RandomNumberGenerator.new()
 
 func create_wave_data(wave_number):
+
 	print("Creating wave for wave: ", GameData.current_wave)
 	var wave_points = pow(wave_number, round_multiplier)
 	if wave_points < 10:
@@ -42,6 +46,7 @@ func create_wave_data(wave_number):
 		Globals.ui.add_towers_to_ui()
 		Globals.gamescene.add_towers_to_gamescene()
 		wave.append(npcs.merchants.RatMerchant.instance())
+		emit_signal("merchant_round", npcs.merchants.RatMerchant)
 		return wave
 		
 	# Each wave will have a certain amount of points to buy enemies with
