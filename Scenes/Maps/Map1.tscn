@@ -1,8 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Assets/TileMapv1.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Tilemap/TileMapv1.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Towers/Obstructed.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Maps/TileMaps/MapTileset.tres" type="TileSet" id=3]
+
 
 [sub_resource type="TileSet" id=2]
 2/name = "Obstructed.png 2"
