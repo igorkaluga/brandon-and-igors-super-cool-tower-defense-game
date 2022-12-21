@@ -53,7 +53,6 @@ size_flags_horizontal = 4
 text = "New Game"
 align = 1
 valign = 1
-percent_visible = -0.142857
 
 [node name="ExitGame" type="TextureButton" parent="MarginContainer/VBoxContainer"]
 margin_top = 155.0

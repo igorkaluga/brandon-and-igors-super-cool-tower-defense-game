@@ -2,11 +2,17 @@ extends CanvasLayer
 
 onready var HUD = $HUD
 var selected_tower
+onready var tower_info = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo
+onready var sell_button = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/MarginContainer/VBoxContainer/TowerSell
+var shop_screen = preload("res://Scenes/UI/Shop/Shop.tscn")
+var shop
+var is_shopping_round = false
 
 func _ready():
 	Globals.ui = self
-	$HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/ColorRect/TowerSell.connect("pressed", self, "_on_Sell_input_event")
-	add_towers_to_ui()
+	sell_button.connect("pressed", self, "_on_TowerSell_pressed")
+	WaveHandler.connect("merchant_round", self, "store_available")
+	add_towers_to_ui()	
 
 func add_towers_to_ui():
 	var available_towers = GameData.towers.keys()
@@ -24,7 +30,11 @@ func add_towers_to_ui():
 		build_button.set_name(available_towers[i])
 		i += 1
 
-func _on_Sell_input_event():
+func store_available(merchant):
+	is_shopping_round = true
+	$HUD/Shop.visible = true
+
+func _on_TowerSell_pressed():
 	Globals.gamescene.sell_tower(selected_tower)
 	unload_tower_display()
 
@@ -33,30 +43,13 @@ func _on_Information_input_event( viewport, event, shape_idx, tower ):
 		load_tower_display(tower)
 	
 func unload_tower_display():
-	for i in get_tree().get_nodes_in_group("TowerInspector"):
-		i.visible = false
+	tower_info.unshow_data()
 	selected_tower = null
 		
 func load_tower_display(tower):
 	selected_tower = tower
-	for i in get_tree().get_nodes_in_group("TowerInspector"):
-		if i.is_in_group("SellButton") and tower.built == false:
-			continue
-		i.visible = true
-	var TowerIcon = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/AssetFrames/Frame/TowerIcon
-	var TowerProjectile = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/AssetFrames/Frame2/TowerIcon
-	var tower_range = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TowerRange/Value
-	var tower_rof = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/TowerROF/Value
-	var projectile_damage = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/ProjectileDamage/Value
-	var tower_value = $HUD/TextureRect/MarginContainer/VBoxContainer/TowerInfo/ColorRect/Value
-	var projectile = tower.TowerValues.tower_projectile.instance()
-	TowerIcon.texture = tower.TowerValues.tower_asset
-	TowerProjectile.texture = projectile.projectile_asset
-
-	tower_range.text = String(tower.TowerValues.tower_range)
-	tower_rof.text = String(tower.TowerValues.tower_rof)
-	projectile_damage.text = String(projectile.projectile_damage)
-	tower_value.text = String(tower.TowerValues.tower_cost)
+	tower_info.load_tower_display(tower)
+	tower_info.show_data(tower)
 
 func set_tower_preview(tower_type, mouse_position):
 	var drag_tower = load(GameData.towers[tower_type].Location).instance()
@@ -86,6 +79,9 @@ func update_tower_preview(new_position, color):
 		get_node("TowerPreview/Sprite").modulate = Color(color)
 
 func on_wave_end():
+	if is_shopping_round:
+		is_shopping_round = false
+		$HUD/Shop.visible = false
 	$HUD/TextureRect/MarginContainer/VBoxContainer/Controls/PausePlayButton.pressed = false
 
 func update_health():
@@ -109,10 +105,10 @@ func update_data():
 	update_health()
 	update_current_round()
 	
-func display_message(message_contents):
+func display_message(message_contents, time = null):
 	var message = load("res://Scenes/UI/Message.tscn").instance()
 	HUD.add_child(message)
-	message.update_message(message_contents)
+	message.update_message(message_contents, time)
 #	$GameScene/UI/HUD/MessageBox/Label.update_message(message_contents)
 	
 func _on_PausePlayButton_pressed():
@@ -131,3 +127,7 @@ func _on_FastForward_pressed():
 	else:
 		Engine.set_time_scale(2.0)
 
+func _on_Shop_pressed():
+	shop = shop_screen.instance()
+	add_child(shop)
+	shop.popup()
