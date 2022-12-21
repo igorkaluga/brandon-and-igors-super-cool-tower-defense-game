@@ -25,6 +25,8 @@ theme = ExtResource( 2 )
 text = "Congratulations! Round Completed! "
 align = 1
 autowrap = true
-percent_visible = -0.0322581
+
+[node name="Timer" type="Timer" parent="."]
 
 [connection signal="gui_input" from="." to="." method="_on_MessageBox_gui_input"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

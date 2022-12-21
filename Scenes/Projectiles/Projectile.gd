@@ -4,17 +4,21 @@ var velocity = Vector2(0,1)
 var projectile_speed = 750
 var projectile_hp = 2
 var projectile_damage = 0
+var effect_type = null
 var _target
 var start = Vector2.ZERO
 var max_time = 1.0
+var projectile_asset
 
-func _init(_projectile_speed, _projectile_hp, _projectile_damage):
+func _init(_projectile_speed, _projectile_hp, _projectile_damage, _projectile_asset, effect = null):
 	projectile_speed = _projectile_speed
 	projectile_hp = _projectile_hp
 	projectile_damage = _projectile_damage
+	effect_type = effect
+	projectile_asset = _projectile_asset
 	
 func _ready():
-	connect("body_entered", self, "_on_Projectile_body_entered")
+	connect("area_entered", self, "_on_Projectile_area_entered")
 	var timer = Timer.new()
 	timer.wait_time = max_time
 	timer.autostart = true
@@ -41,9 +45,8 @@ func _process(delta):
 	# If the target is already dead, remove the target
 	_target = null
 
-func _on_Projectile_body_entered(area):
+func _on_Projectile_area_entered(area):
 	if area.is_in_group("enemies"):
-		area.hit(projectile_damage)
 		_target = null
 		projectile_hp -= 1
 		if projectile_hp == 0:

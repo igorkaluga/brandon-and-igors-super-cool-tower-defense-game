@@ -1,7 +1,9 @@
 [gd_resource type="TileSet" load_steps=3 format=2]
 
-[ext_resource path="res://Assets/TileMapv1.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Towers/Obstructed.png" type="Texture" id=2]
+
+[sub_resource type="StreamTexture" id=1]
+load_path = "res://.import/TileMapv1.png-52117902460e814bc7d2d0c724a7186e.stex"
 
 [resource]
 1/name = "Obstructed.png 1"
@@ -19,7 +21,7 @@
 1/shapes = [  ]
 1/z_index = 0
 2/name = "TileMapv1.png 2"
-2/texture = ExtResource( 1 )
+2/texture = SubResource( 1 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 0, 0, 64, 32 )
@@ -31,7 +33,7 @@
 2/autotile/spacing = 0
 2/autotile/occluder_map = [  ]
 2/autotile/navpoly_map = [  ]
-2/autotile/priority_map = [ Vector3( 0, 0, 16 ) ]
+2/autotile/priority_map = [ Vector3( 0, 0, 21 ), Vector3( 1, 1, 2 ) ]
 2/autotile/z_index_map = [  ]
 2/occluder_offset = Vector2( 0, 0 )
 2/navigation_offset = Vector2( 0, 0 )

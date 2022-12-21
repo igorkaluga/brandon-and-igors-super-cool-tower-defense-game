@@ -1,28 +1,21 @@
 extends Node2D
 
+export(Resource) var TowerValues
+
 var type
 var enemy_array = []
 var enemy
 var built = false
 var ready = true
-
-# Default values; probably not necessary to have
-var tower_range = 50
-var tower_projectile = "res://Scenes/Projectiles/Arrow.tscn"
-var tower_rof = 1
-var tower_cost = 50
+var build_tile
 
 # Where the projectile will originate on the tower sprite
 onready var firingPosition = $FiringPosition
 
-func _init(_tower_range, _tower_rof, _tower_projectile):
-	tower_range = _tower_range
-	tower_rof = _tower_rof
-	tower_projectile = load(_tower_projectile)
-
 func _ready():
+	$Information.connect("input_event", Globals.ui, "_on_Information_input_event", [self])
 	if built:
-		$Range/CollisionShape2D.get_shape().radius = tower_range
+		$Range/CollisionShape2D.get_shape().radius = TowerValues.tower_range
 
 func _physics_process(delta):
 	if enemy_array.size() != 0 and built:
@@ -35,14 +28,14 @@ func _physics_process(delta):
 func fire():
 	ready = false
 	$FiringPosition.look_at(enemy.position)
-	var projectile = tower_projectile.instance()
+	var projectile = TowerValues.tower_projectile.instance()
 	get_parent().add_child(projectile)
 	projectile.global_position = $FiringPosition/Position2D.global_position
 	
 	projectile.velocity = enemy.position - projectile.position
 	projectile._target = enemy
 
-	yield(get_tree().create_timer(tower_rof), "timeout")
+	yield(get_tree().create_timer(TowerValues.tower_rof), "timeout")
 	ready = true
 
 func select_enemy(): 
