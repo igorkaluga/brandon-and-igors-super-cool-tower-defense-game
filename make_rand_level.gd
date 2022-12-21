@@ -17,11 +17,11 @@ func make_empty_matrix(height, width):
 			matrix_row.append(" ")
 		empty_matrix.append(matrix_row)
 		
-func get_direction():
+func get_direction(valid_directions):
 	# [x,y] coordinates
 	# [up, right, left, down]
-	var direction_arr = [[0,1], [1,0], [-1,0], [0,-1]]
-	var direction = direction_arr[randi()%4]
+	var array_len = len(valid_directions)
+	var direction = valid_directions[randi()%array_len]
 	
 	return direction
 
@@ -39,29 +39,62 @@ func mark_tile(tile_loc, matrix, marker):
 	var y_cord = tile_loc[1]
 	
 	matrix[x_cord][y_cord] = marker
+
+var direction_arr = [[0,1], [1,0], [-1,0], [0,-1]]
+var reverse_direction_arr = [[0,-1], [-1,0], [1,0], [0,1]]
 	
 func check_reverse_dir(prev_dir, cur_dir):
 	# [x,y] coordinates
 	# [up, right, left, down]
 	# [[0,1], [1,0], [-1,0], [0,-1]]
-	
-	var direction_arr = [[0,1], [1,0], [-1,0], [0,-1]]
-	var reverse_direction_arr = [[0,-1], [-1,0], [1,0], [0,1]]
-	
-	
 	if prev_dir != null:
 		var prev_direction_index = direction_arr.find(prev_dir)
 		if reverse_direction_arr[prev_direction_index] == cur_dir:
 			return true
-			
 	return false
+	
+func get_reverse_dir(cur_dir):
+	var reverse_direction_index = direction_arr.find(cur_dir)
+	
+	return reverse_direction_arr[reverse_direction_index]
+	
+func get_valid_dir_arr(invalid_arr):
+	
+	var valid_dir_arr = []
+	
+	for dir in direction_arr:
+		if not dir in invalid_arr:
+			valid_dir_arr.append(dir)
+
+	return valid_dir_arr
+	
+func get_valid_directions(cur_pos, prev_dir, map_size):
+	
+	var valid_dir_arr = []
+	
+	var reverse_prev_dir = get_reverse_dir(prev_dir)
+
+	for dir in direction_arr:
+		if reverse_prev_dir == dir:
+			# skips previous direction so reverse path case doesnt occur
+			continue
+			
+		if cur_pos[0] + dir[0] < 0 or cur_pos[0] + dir[0] > map_size - 1:
+			# invalid x-axis
+			continue
+		elif cur_pos[1] + dir[1] < 0 or cur_pos[1] + dir[1] > map_size - 1:
+			# invalid y-axis
+			continue
+		else:
+			valid_dir_arr.append(dir)
+			
+	return valid_dir_arr
 	
 func check_out_of_bounds(path_length, path_dir, cur_tile, map_size):
 	"""
 		Checks if the path to be generated path will put the path out of map bounds.
 		Adds the path length to the correct (x,y) coordinate of the current tile.
 		If out of bounds then returns true, otherwise false
-		
 	"""
 	var cur_plus_len = path_length
 	
@@ -77,6 +110,14 @@ func check_out_of_bounds(path_length, path_dir, cur_tile, map_size):
 	return false
 	
 func check_on_map_edge(position, map_size):
+	"""
+		If the current position is on any of the maps edges then return true.
+		
+		> check_on_map_edge([0,2], 10)
+		true
+		> check_on_map_edge([4,9], 10)
+		true
+	"""
 	if 0 in position or map_size - 1 in position:
 		return true
 	return false
@@ -89,7 +130,9 @@ func make_path(matrix, start_tile):
 			- Original (for tracking directional changes, how we view the map)
 			- Flipped (to render the map)
 	"""
+	
 	var tile_cnt = 1 # for logic later on
+	random.randomize()
 	
 	# on creation mark the entrance tile as "A".
 	var flipped_arr = reflect_matrix_move(start_tile[0], start_tile[1], len(matrix))
@@ -101,45 +144,34 @@ func make_path(matrix, start_tile):
 	
 	var prev_path_dir
 	
-	var gen_map = true
+	# var gen_map = true
 	var gen_map_cnt = 0
 	
-	while gen_map_cnt < 1:
+	while gen_map_cnt < 3:
 		
-		var path_direction = get_direction()
+		var valid_dir_array = get_valid_directions(original_tile, prev_path_dir, map_size)
 		
-		# check if new path is a reverse of the previous path.
-		var reverse_path = check_reverse_dir(prev_path_dir, path_direction)
-
-		while reverse_path:
-			path_direction = get_direction()
-			reverse_path = check_reverse_dir(prev_path_dir, path_direction)
+		var path_direction = get_direction(valid_dir_array)
+		var path_length = random.randi_range(1,4) # make get_path_len function
 		
-		random.randomize()
-		var path_length = random.randi_range(2,4)
+		# out of bounds checker
+		var is_out_of_bounds = check_out_of_bounds(path_length, path_direction, original_tile, map_size)
 		
-		# check for out of bounds pathing.
-		var out_of_bounds = check_out_of_bounds(path_length, path_direction, original_tile, map_size)
-		
-		
-		
-		
-		while out_of_bounds:
-			# if original tiles is not near the map border, then get new length,
-			# otherwise, get new direction entirely.
-			original_tile = [1,0]
-			var on_map_edge = check_on_map_edge(original_tile, map_size)
-			
-			out_of_bounds = check_out_of_bounds(path_length, path_direction, original_tile, map_size)
+		var timeout_fix = 0
+		while is_out_of_bounds:
+			print(timeout_fix)
+			if timeout_fix >= 10:
+				break
+			print("out of bounds elif")
 			path_length = random.randi_range(1,4)
-			break
-		#break
+			print("trying path_len = ", path_length)
+			is_out_of_bounds = check_out_of_bounds(path_length, path_direction, original_tile, map_size)
+			timeout_fix += 1
 		
-		print("path len: ", path_length)
+		print("new path_len: ", path_length)
 		print("path dir: ", path_direction)
-		print()
 	
-		# marks the tiles on the matrix in range of 0, path_length in generated direction.
+		# marks the tiles on the matrix
 		for i in range(0, path_length):
 				
 			var tile_marker = "X"
@@ -158,12 +190,16 @@ func make_path(matrix, start_tile):
 			
 		prev_path_dir = path_direction
 		gen_map_cnt += 1
+		print()
 	
 func _run():
 	
+	#print(get_valid_directions([4,4], [1,0], map_size))
+	print("\n=============================================")
+	
 	make_empty_matrix(map_size, map_size)
 
-	make_path(empty_matrix, [4,4])
+	make_path(empty_matrix, [0,4])
 	
 	#prints matrix for visualization purposes
 	print()
