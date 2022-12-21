@@ -5,7 +5,7 @@ var height
 var width
 var matrix_row
 var random = RandomNumberGenerator.new()
-var map_size = 10
+var map_size = 20
 
 # EMPTY MATRIX VER (1)
 var empty_matrix = []
@@ -71,8 +71,10 @@ func get_valid_dir_arr(invalid_arr):
 func get_valid_directions(cur_pos, prev_dir, map_size):
 	
 	var valid_dir_arr = []
+	var reverse_prev_dir
 	
-	var reverse_prev_dir = get_reverse_dir(prev_dir)
+	if prev_dir != null:
+		reverse_prev_dir = get_reverse_dir(prev_dir)
 
 	for dir in direction_arr:
 		if reverse_prev_dir == dir:
@@ -80,12 +82,15 @@ func get_valid_directions(cur_pos, prev_dir, map_size):
 			continue
 			
 		if cur_pos[0] + dir[0] < 0 or cur_pos[0] + dir[0] > map_size - 1:
+			print("invalid x: ", dir)
 			# invalid x-axis
 			continue
 		elif cur_pos[1] + dir[1] < 0 or cur_pos[1] + dir[1] > map_size - 1:
 			# invalid y-axis
+			print("invalid y: ", dir)
 			continue
 		else:
+			print(dir)
 			valid_dir_arr.append(dir)
 			
 	return valid_dir_arr
@@ -105,7 +110,7 @@ func check_out_of_bounds(path_length, path_dir, cur_tile, map_size):
 		# move on y axis
 		cur_plus_len = cur_tile[1] + (path_dir[1] * path_length)
 	
-	if cur_plus_len >= map_size - 1 or cur_plus_len <= 0: # -1 since matrix is 0 indexed
+	if cur_plus_len >= map_size - 1 or cur_plus_len < 0: # -1 since matrix is 0 indexed
 		return true
 	return false
 	
@@ -147,12 +152,15 @@ func make_path(matrix, start_tile):
 	# var gen_map = true
 	var gen_map_cnt = 0
 	
-	while gen_map_cnt < 3:
+	while gen_map_cnt < 10:
 		
 		var valid_dir_array = get_valid_directions(original_tile, prev_path_dir, map_size)
 		
+		print(prev_path_dir)
+		print(valid_dir_array)
+		
 		var path_direction = get_direction(valid_dir_array)
-		var path_length = random.randi_range(1,4) # make get_path_len function
+		var path_length = random.randi_range(3,8) # make get_path_len function
 		
 		# out of bounds checker
 		var is_out_of_bounds = check_out_of_bounds(path_length, path_direction, original_tile, map_size)
@@ -160,12 +168,12 @@ func make_path(matrix, start_tile):
 		var timeout_fix = 0
 		while is_out_of_bounds:
 			print(timeout_fix)
-			if timeout_fix >= 10:
+			if timeout_fix >= 20:
 				break
-			print("out of bounds elif")
 			path_length = random.randi_range(1,4)
 			print("trying path_len = ", path_length)
 			is_out_of_bounds = check_out_of_bounds(path_length, path_direction, original_tile, map_size)
+			print("is_out_of_bounds: ", is_out_of_bounds)
 			timeout_fix += 1
 		
 		print("new path_len: ", path_length)
@@ -199,7 +207,7 @@ func _run():
 	
 	make_empty_matrix(map_size, map_size)
 
-	make_path(empty_matrix, [0,4])
+	make_path(empty_matrix, [0,9])
 	
 	#prints matrix for visualization purposes
 	print()
