@@ -15,7 +15,7 @@ onready var firingPosition = $FiringPosition
 func _ready():
 	$Information.connect("input_event", Globals.ui, "_on_Information_input_event", [self])
 	if built:
-		$Range/CollisionShape2D.get_shape().radius = TowerValues.tower_range
+		$Range/CollisionShape2D.get_shape().radius = GameData.towers[type].tower_range
 
 func _physics_process(delta):
 	if enemy_array.size() != 0 and built:
@@ -28,14 +28,14 @@ func _physics_process(delta):
 func fire():
 	ready = false
 	$FiringPosition.look_at(enemy.position)
-	var projectile = TowerValues.tower_projectile.instance()
+	var projectile = GameData.towers[type].tower_projectile.instance()
 	get_parent().add_child(projectile)
 	projectile.global_position = $FiringPosition/Position2D.global_position
 	
 	projectile.velocity = enemy.position - projectile.position
 	projectile._target = enemy
-
-	yield(get_tree().create_timer(TowerValues.tower_rof), "timeout")
+	print("Fire time! ", GameData.towers[type].tower_rof)
+	yield(get_tree().create_timer(GameData.towers[type].tower_rof), "timeout")
 	ready = true
 
 func select_enemy(): 
@@ -45,6 +45,9 @@ func select_enemy():
 	var max_offset = enemy_progress_array.max()
 	var enemy_index = enemy_progress_array.find(max_offset)
 	enemy = enemy_array[enemy_index]
+
+func update_stats():
+	pass
 
 func _on_Range_body_entered(body):
 	if body.is_in_group("enemies"):
