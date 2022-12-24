@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/UI/Shop/Shop.gd" type="Script" id=6]
 
 [node name="Shop" type="WindowDialog"]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -80,21 +81,17 @@ autowrap = true
 
 [node name="CardsContainer" type="VBoxContainer" parent="ShopWindow/HBoxContainer"]
 margin_left = 124.0
-margin_right = 324.0
+margin_right = 124.0
 margin_bottom = 240.0
 size_flags_horizontal = 8
 size_flags_vertical = 3
 alignment = 1
 
 [node name="Cards" type="MarginContainer" parent="ShopWindow/HBoxContainer/CardsContainer"]
-margin_top = 56.0
-margin_right = 200.0
-margin_bottom = 180.0
-rect_min_size = Vector2( 200, 124 )
+margin_top = 118.0
+margin_bottom = 118.0
 
 [node name="GridContainer" type="GridContainer" parent="ShopWindow/HBoxContainer/CardsContainer/Cards"]
-margin_right = 200.0
-margin_bottom = 124.0
 columns = 5
 
 [node name="UpgradeCard3" parent="ShopWindow/HBoxContainer/CardsContainer/Cards/GridContainer" instance=ExtResource( 3 )]
@@ -104,24 +101,17 @@ anchor_right = 0.0
 margin_left = 0.0
 margin_right = 40.0
 
-[node name="UpgradeCard" parent="ShopWindow/HBoxContainer/CardsContainer/Cards/GridContainer" instance=ExtResource( 3 )]
+[node name="Confirmation" type="Label" parent="ShopWindow/HBoxContainer/CardsContainer"]
 visible = false
-anchor_left = 0.0
-anchor_right = 0.0
-margin_left = 44.0
-margin_right = 84.0
-
-[node name="UpgradeCard4" parent="ShopWindow/HBoxContainer/CardsContainer/Cards/GridContainer" instance=ExtResource( 3 )]
-visible = false
-anchor_left = 0.0
-anchor_right = 0.0
-margin_left = 88.0
-margin_right = 128.0
+self_modulate = Color( 1, 0.984314, 0.0588235, 1 )
+margin_top = 108.0
+margin_right = 276.0
+margin_bottom = 132.0
+text = "Drag card to tower to upgrade"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ShopWindow/HBoxContainer/CardsContainer"]
-margin_top = 184.0
-margin_right = 200.0
-margin_bottom = 184.0
+margin_top = 122.0
+margin_bottom = 122.0
 
 [node name="TowerInfo" parent="ShopWindow/HBoxContainer/CardsContainer/HBoxContainer" instance=ExtResource( 5 )]
 visible = false

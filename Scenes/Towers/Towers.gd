@@ -34,7 +34,6 @@ func fire():
 	
 	projectile.velocity = enemy.position - projectile.position
 	projectile._target = enemy
-	print("Fire time! ", GameData.towers[type].tower_rof)
 	yield(get_tree().create_timer(GameData.towers[type].tower_rof), "timeout")
 	ready = true
 
@@ -47,7 +46,7 @@ func select_enemy():
 	enemy = enemy_array[enemy_index]
 
 func update_stats():
-	pass
+	$Range/CollisionShape2D.get_shape().radius = GameData.towers[type].tower_range
 
 func _on_Range_body_entered(body):
 	if body.is_in_group("enemies"):

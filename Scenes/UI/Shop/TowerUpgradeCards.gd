@@ -1,5 +1,7 @@
 extends Button
 
+signal upgrade_selected
+
 onready var Info = $VBoxContainer/Info
 onready var Cost = $VBoxContainer/Cost
 var rng = RandomNumberGenerator.new()
@@ -19,6 +21,24 @@ var upgrades = {
 		"RoF": [0.50, .9]
 	}
 }
+
+func get_drag_data(_pos):
+	var data = {}
+	var drag_preview = self.duplicate()
+	data["upgrade_value"] = upgrade_value
+	data["upgrade_type"] = upgrade_type
+	data["upgrade_cost"] = upgrade_cost
+	data["card"] = self
+
+	set_drag_preview(drag_preview)
+	
+	return data
+		
+func can_drop_data(_pos, data):
+	return false
+	
+func drop_data(_pos, data):
+	print("Twoers")
 
 func get_upgrade_info(incoming_upgrade_type, incoming_upgrade_cost):
 	rng.randomize()
@@ -45,16 +65,8 @@ func get_upgrade_info(incoming_upgrade_type, incoming_upgrade_cost):
 	$VBoxContainer/Cost.text = str(upgrade_cost)
 
 
-
 func choose_key(array):
 	return array[randi() % array.size()]
 
 func _on_UpgradeCard_pressed():
-	if upgrade_type == "DMG":
-		GameData.projectiles.Arrow.projectile_damage += upgrade_value
-	elif upgrade_type == "RNG":
-		GameData.towers.BasicTower.tower_range *= upgrade_value
-	elif upgrade_type == "RoF":
-		GameData.towers.BasicTower.tower_rof *= upgrade_value
-
-	print("cheeee: ", upgrade_value)
+	emit_signal("upgrade_selected", self)

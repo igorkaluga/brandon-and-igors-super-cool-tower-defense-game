@@ -12,6 +12,7 @@ var towers = {
 		"tower_range": 100,
 		"tower_rof": 1,
 		"tower_cost": 100,
+		"tower_projectile_name": "Arrow",
 		"tower_projectile": preload("res://Scenes/Projectiles/Arrow.tscn"),
 		"tower_asset": preload("res://Assets/Towers/TowerSpritePlaceHolder.png")
 		}

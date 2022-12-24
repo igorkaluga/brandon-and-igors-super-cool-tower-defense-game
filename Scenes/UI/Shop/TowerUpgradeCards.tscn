@@ -11,7 +11,6 @@ margin_left = -320.0
 margin_right = -280.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 40, 64 )
-toggle_mode = true
 expand_icon = true
 script = ExtResource( 3 )
 
