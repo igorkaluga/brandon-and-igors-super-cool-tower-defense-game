@@ -32,7 +32,7 @@ func _ready():
 	Globals.ui.display_message("good luck asshole")
 
 func sell_tower(tower):
-	GameData.money += tower.TowerValues.tower_cost
+	GameData.money += GameData.towers[tower.type].tower_cost
 	map_node.get_node("TowerExclusion").set_cellv(tower.build_tile, -1)
 
 	tower.queue_free()
@@ -73,7 +73,7 @@ func wave_completed():
 	active_wave = false
 	print("Wave complete!")
 	emit_signal("wave_end")
-	GameData.money += 200
+	GameData.money += 100
 	Globals.ui.display_message("Wave Completed!", 0.5)
 	if GameData.current_wave == total_waves:
 		Globals.uidisplay_message("You won! Heres some cash.")
@@ -99,9 +99,7 @@ func on_enemy_death(enemy_value):
 	
 # Building Func
 func initiate_build_mode(tower_type):
-#	build_cost = GameData.towers[tower_type].Cost
-	var tower = load(GameData.towers[tower_type].Resources)
-	build_cost = tower.tower_cost
+	build_cost = GameData.towers[tower_type].tower_cost
 	if build_cost > GameData.money:
 		return
 		
@@ -137,6 +135,7 @@ func verify_and_build():
 		new_tower.build_tile = build_tile
 		new_tower.built = true
 		new_tower.type = build_type
+		new_tower.add_to_group(build_type)
 		
 		map_node.get_node("Towers").add_child(new_tower, true)
 		# Sets a tile in the TowerExclusion zone so we cant double build

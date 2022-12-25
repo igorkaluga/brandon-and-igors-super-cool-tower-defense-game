@@ -33,6 +33,8 @@ func add_towers_to_ui():
 func store_available(merchant):
 	is_shopping_round = true
 	$HUD/Shop.visible = true
+	shop = shop_screen.instance()
+	add_child(shop)
 
 func _on_TowerSell_pressed():
 	Globals.gamescene.sell_tower(selected_tower)
@@ -47,9 +49,10 @@ func unload_tower_display():
 	selected_tower = null
 		
 func load_tower_display(tower):
-	selected_tower = tower
-	tower_info.load_tower_display(tower)
-	tower_info.show_data(tower)
+	if tower.name != "DragTower":
+		selected_tower = tower
+		tower_info.load_tower_display(tower.type)
+		tower_info.show_data(tower)
 
 func set_tower_preview(tower_type, mouse_position):
 	var drag_tower = load(GameData.towers[tower_type].Location).instance()
@@ -128,6 +131,4 @@ func _on_FastForward_pressed():
 		Engine.set_time_scale(2.0)
 
 func _on_Shop_pressed():
-	shop = shop_screen.instance()
-	add_child(shop)
 	shop.popup()

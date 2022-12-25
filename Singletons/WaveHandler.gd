@@ -41,8 +41,8 @@ func create_wave_data(wave_number):
 	var new_enemy_tier
 	rng.randomize()
 	if GameData.current_wave % 10 == 1:
-		print("Added to dictks")
 		GameData.towers["IceTower"] = Globals.towers_dict["IceTower"]
+		GameData.towers["FireTower"] = Globals.towers_dict["FireTower"]
 		Globals.ui.add_towers_to_ui()
 		Globals.gamescene.add_towers_to_gamescene()
 		wave.append(npcs.merchants.RatMerchant.instance())

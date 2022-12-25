@@ -1,8 +1,8 @@
 extends "res://Scenes/Projectiles/Projectile.gd"
 
-var speed = 250
-var hp = 1
-var damage = 5
+var speed = GameData.projectiles.Iceball.projectile_speed
+var hp = GameData.projectiles.Iceball.projectile_hp
+var damage = GameData.projectiles.Iceball.projectile_damage
 var effect = Globals.enemy_debuffs.Frozen
 var asset = preload("res://Assets/Towers/Projectiles/IceBall.png")
 
