@@ -22,16 +22,17 @@ var projectiles = {
 	"Arrow": {
 		"projectile_damage": 7,
 		"projectile_speed": 1000,
-		"projectile_hp": 1
+		"projectile_piercing": 1
 	},
 	"Fireball": {
-		"projectile_damage": 10,
+		"projectile_damage": 100,
 		"projectile_speed": 250,
-		"projectile_hp": 1,
+		"projectile_piercing": 1,
+		"projectile_effect": "explosion"
 	},
 	"Iceball": {
 		"projectile_damage": 10,
 		"projectile_speed": 250,
-		"projectile_hp": 1,
+		"projectile_piercing": 1,
 	}
 }

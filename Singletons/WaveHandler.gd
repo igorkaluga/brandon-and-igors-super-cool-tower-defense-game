@@ -40,15 +40,15 @@ func create_wave_data(wave_number):
 	var new_enemy
 	var new_enemy_tier
 	rng.randomize()
-	if GameData.current_wave % 10 == 1:
-		GameData.towers["IceTower"] = Globals.towers_dict["IceTower"]
-		GameData.towers["FireTower"] = Globals.towers_dict["FireTower"]
-		Globals.ui.add_towers_to_ui()
-		Globals.gamescene.add_towers_to_gamescene()
-		wave.append(npcs.merchants.RatMerchant.instance())
-		emit_signal("merchant_round", npcs.merchants.RatMerchant)
-		return wave
-		
+#	if GameData.current_wave % 10 == 1:
+#
+#		wave.append(npcs.merchants.RatMerchant.instance())
+#		emit_signal("merchant_round", npcs.merchants.RatMerchant)
+#		return wave
+#	GameData.towers["IceTower"] = Globals.towers_dict["IceTower"]
+#	GameData.towers["FireTower"] = Globals.towers_dict["FireTower"]
+#	Globals.ui.add_towers_to_ui()
+#	Globals.gamescene.add_towers_to_gamescene()
 	# Each wave will have a certain amount of points to buy enemies with
 	# Most enemies cost a single point, but some enemies cost mor
 	while wave_points > 0:

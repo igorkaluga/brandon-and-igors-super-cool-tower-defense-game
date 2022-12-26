@@ -9,12 +9,30 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "HitBox",
+"language": "GDScript",
+"path": "res://Scenes/Projectiles/HitBox.gd"
+}, {
+"base": "Area2D",
+"class": "HurtBox",
+"language": "GDScript",
+"path": "res://Scenes/Enemies/HurtBox.gd"
+}, {
+"base": "Node2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://Scenes/Projectiles/Arrow.gd"
+}, {
 "base": "Resource",
 "class": "TowerData",
 "language": "GDScript",
 "path": "res://Singletons/TowerData.gd"
 } ]
 _global_script_class_icons={
+"HitBox": "",
+"HurtBox": "",
+"Projectile": "",
 "TowerData": ""
 }
 

@@ -16,11 +16,11 @@ func load_tower_display(tower):
 	var tower_value = $MarginContainer/VBoxContainer/TowerSell/Value
 	var projectile = GameData.towers[tower].tower_projectile.instance()
 	TowerIcon.texture = GameData.towers[tower].tower_asset
-	TowerProjectile.texture = projectile.projectile_asset
+	TowerProjectile.texture = projectile.asset
 
 	tower_range.text = String(GameData.towers[tower].tower_range)
 	tower_rof.text = String(GameData.towers[tower].tower_rof)
-	projectile_damage.text = String(projectile.projectile_damage)
+	projectile_damage.text = String(projectile.damage)
 	tower_value.text = String(GameData.towers[tower].tower_cost)
 
 func show_data(tower):
@@ -54,7 +54,7 @@ func drop_data(_pos, data):
 			var projectile_name = GameData.towers[tower_type].tower_projectile_name
 			GameData.projectiles[projectile_name].projectile_damage += upgrade_value
 		elif upgrade_type == "RNG":
-			GameData.towers[tower_type].tower_range *= upgrade_value
+			GameData.towers[tower_type].tower_range += upgrade_value
 		elif upgrade_type == "RoF":
 			GameData.towers[tower_type].tower_rof *= upgrade_value
 		for tower in get_tree().get_nodes_in_group(tower_type):

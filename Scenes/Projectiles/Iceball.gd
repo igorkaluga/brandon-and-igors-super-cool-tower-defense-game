@@ -6,5 +6,5 @@ var damage = GameData.projectiles.Iceball.projectile_damage
 var effect = Globals.enemy_debuffs.Frozen
 var asset = preload("res://Assets/Towers/Projectiles/IceBall.png")
 
-func _init().(speed, hp, damage, asset, effect):
-	pass
+#func _init().(speed, hp, damage, asset, effect):
+#	pass

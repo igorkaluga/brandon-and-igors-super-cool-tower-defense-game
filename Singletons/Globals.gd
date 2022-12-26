@@ -13,6 +13,13 @@ var enemy_debuffs = {
 		"dot": 3,
 		"speed_modifier": .5,
 		"effect_color": Color("2560a4")
+		},
+	"Burning": {
+		"permanent": false,
+		"timeout": 1,
+		"dot": 3,
+		"speed_modifier": .5,
+		"effect_color": Color("2560a4")
 		}
 	}
 	
