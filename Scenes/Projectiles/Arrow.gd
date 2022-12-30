@@ -17,6 +17,14 @@ onready var impact_detector := $Impact
 
 var _target
 
+func _initialize_values(inc_speed, inc_piercing, inc_damage, inc_asset):
+	speed = inc_speed
+	piercing = inc_piercing
+	damage = inc_damage
+	asset = inc_asset
+	
+	hitbox.damage = damage
+
 func _ready():
 #	set_as_toplevel(true)
 	

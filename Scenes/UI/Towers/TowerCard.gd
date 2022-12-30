@@ -14,13 +14,14 @@ func load_tower_display(tower):
 	var tower_rof = $MarginContainer/VBoxContainer/TowerROF/Value
 	var projectile_damage = $MarginContainer/VBoxContainer/ProjectileDamage/Value
 	var tower_value = $MarginContainer/VBoxContainer/TowerSell/Value
-	var projectile = GameData.towers[tower].tower_projectile.instance()
+	var projectile = GameData.towers[tower].tower_projectile_name
+	print("cum, ", projectile)
 	TowerIcon.texture = GameData.towers[tower].tower_asset
-	TowerProjectile.texture = projectile.asset
+	TowerProjectile.texture = GameData.projectiles[projectile].projectile_asset
 
 	tower_range.text = String(GameData.towers[tower].tower_range)
 	tower_rof.text = String(GameData.towers[tower].tower_rof)
-	projectile_damage.text = String(projectile.damage)
+	projectile_damage.text = String(GameData.projectiles[projectile].projectile_damage)
 	tower_value.text = String(GameData.towers[tower].tower_cost)
 
 func show_data(tower):
