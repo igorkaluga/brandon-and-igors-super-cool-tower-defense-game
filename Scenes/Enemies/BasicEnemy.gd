@@ -32,6 +32,7 @@ func init(tier):
 	original_modulate = self.modulate
 
 func take_damage(damage, effect = null):
+	print("damage: ", damage)
 	hp -= damage
 	if hp <= 0:
 		destroy()

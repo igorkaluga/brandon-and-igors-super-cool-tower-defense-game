@@ -26,7 +26,7 @@ var projectiles = {
 		"projectile_asset": preload("res://Assets/Towers/Projectiles/Arrow.png")
 	},
 	"Fireball": {
-		"projectile_damage": 100,
+		"projectile_damage": 10,
 		"projectile_speed": 250,
 		"projectile_piercing": 1,
 		"projectile_effect": "explosion",
