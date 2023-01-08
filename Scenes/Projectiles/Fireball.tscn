@@ -8,10 +8,10 @@
 radius = 7.0
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 6, 2.5 )
+extents = Vector2( 6.5, 4 )
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 27.81
+radius = 25.0
 
 [sub_resource type="ParticlesMaterial" id=3]
 flag_disable_z = true
@@ -33,13 +33,15 @@ collision_layer = 0
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Impact"]
-position = Vector2( 0, 0.5 )
+position = Vector2( -0.5, 0 )
 shape = SubResource( 6 )
 
 [node name="ExplosionRadius" type="Area2D" parent="." groups=["projectile"]]
+script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionRadius"]
 shape = SubResource( 5 )
+disabled = true
 
 [node name="Explosion" type="Particles2D" parent="ExplosionRadius"]
 emitting = false

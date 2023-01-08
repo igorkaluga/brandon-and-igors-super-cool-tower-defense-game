@@ -40,10 +40,10 @@ func create_wave_data(wave_number):
 	var new_enemy
 	var new_enemy_tier
 	rng.randomize()
-	if GameData.current_wave % 10 == 1:
-		wave.append(npcs.merchants.RatMerchant.instance())
-		emit_signal("merchant_round", npcs.merchants.RatMerchant)
-		return wave
+#	if GameData.current_wave % 10 == 1:
+#		wave.append(npcs.merchants.RatMerchant.instance())
+#		emit_signal("merchant_round", npcs.merchants.RatMerchant)
+#		return wave
 
 	Globals.add_tower("FireTower")
 	Globals.add_tower("IceTower")
