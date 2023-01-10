@@ -22,16 +22,20 @@ var projectiles = {
 	"Arrow": {
 		"projectile_damage": 7,
 		"projectile_speed": 1000,
-		"projectile_hp": 1
+		"projectile_piercing": 1,
+		"projectile_asset": preload("res://Assets/Towers/Projectiles/Arrow.png")
 	},
 	"Fireball": {
 		"projectile_damage": 10,
 		"projectile_speed": 250,
-		"projectile_hp": 1,
+		"projectile_piercing": 1,
+		"projectile_effect": "explosion",
+		"projectile_asset": preload("res://Assets/Towers/Projectiles/Fireball.png")
 	},
 	"Iceball": {
 		"projectile_damage": 10,
 		"projectile_speed": 250,
-		"projectile_hp": 1,
+		"projectile_piercing": 1,
+		"projectile_asset": preload("res://Assets/Towers/Projectiles/IceBall.png")
 	}
 }

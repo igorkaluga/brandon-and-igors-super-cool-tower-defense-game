@@ -21,6 +21,9 @@ offset = Vector2( 8, 8 )
 
 [node name="Range" type="Area2D" parent="."]
 position = Vector2( 8, 8 )
+collision_layer = 4
+collision_mask = 3
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
 shape = SubResource( 1 )
@@ -31,6 +34,9 @@ position = Vector2( 8, 8 )
 [node name="Position2D" type="Position2D" parent="FiringPosition"]
 
 [node name="Information" parent="." instance=ExtResource( 4 )]
+collision_layer = 16
+collision_mask = 0
+monitorable = false
 
 [node name="CollisionShape2D" parent="Information" index="0"]
 position = Vector2( 8, 8 )

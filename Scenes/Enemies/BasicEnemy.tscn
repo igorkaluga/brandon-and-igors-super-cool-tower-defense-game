@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/Enemies/resized_plurble.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Enemies/BasicEnemy.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/Enemies/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Enemies/HurtBox.tscn" type="PackedScene" id=3]
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 1 )
@@ -33,22 +33,23 @@ loop = false
 script = ExtResource( 2 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=["enemies"]]
+collision_mask = 0
 
 [node name="Sprite" type="AnimatedSprite" parent="KinematicBody2D"]
 frames = SubResource( 4 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D" groups=["enemies"]]
 position = Vector2( 0.5, 0 )
 shape = SubResource( 8 )
 
-[node name="Hitbox" parent="KinematicBody2D" groups=["enemies"] instance=ExtResource( 3 )]
+[node name="Hurtbox" parent="KinematicBody2D" groups=["enemies"] instance=ExtResource( 3 )]
+monitorable = false
 
-[node name="CollisionShape2D" parent="KinematicBody2D/Hitbox" index="0"]
+[node name="CollisionShape2D" parent="KinematicBody2D/Hurtbox" index="0"]
 position = Vector2( 0.5, 0 )
 shape = SubResource( 7 )
 
-[connection signal="area_entered" from="KinematicBody2D/Hitbox" to="." method="_on_Hitbox_area_entered"]
-
-[editable path="KinematicBody2D/Hitbox"]
+[editable path="KinematicBody2D/Hurtbox"]

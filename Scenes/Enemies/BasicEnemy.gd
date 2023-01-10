@@ -31,7 +31,8 @@ func init(tier):
 	original_speed = speed
 	original_modulate = self.modulate
 
-func hit(damage, effect = null):
+func take_damage(damage, effect = null):
+	print("damage: ", damage)
 	hp -= damage
 	if hp <= 0:
 		destroy()
@@ -54,14 +55,15 @@ func apply_effect(effect):
 	# TODO: DOT Damage here
 
 	speed *= effect.speed_modifier
+	speed *= effect.speed_modifier
 	
 func wait(time):
 	timer.wait_time += time
 	timer.start()
 
-func _on_Hitbox_area_entered(area):
-	if area.is_in_group("projectile") and hp > 0:
-			hit(area.projectile_damage, area.effect_type)
+#func _on_Hitbox_area_entered(area):
+#	if area.is_in_group("projectile") and hp > 0:
+#		hit(area.projectile_damage, area.effect_type)
 		
 func _on_timer_timeout():
 	timer.stop()

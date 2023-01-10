@@ -17,7 +17,7 @@ func ready():
 var upgrades = {
 	"tier1": {
 		"DMG": [1, 3],
-		"RNG": [1.25, 2],
+		"RNG": [10, 25],
 		"RoF": [0.50, .9]
 	}
 }
@@ -51,7 +51,7 @@ func get_upgrade_info(incoming_upgrade_type, incoming_upgrade_cost):
 		upgrade_value = rng.randi_range(upgrades.tier1.DMG[0], upgrades.tier1.DMG[1]) # Get random stat allocation
 		upgrade_value = stepify(upgrade_value, 0.1) # Round to one decimial
 	elif upgrade_type == "RNG":
-		upgrade_value = rand_range(upgrades.tier1.RNG[0], upgrades.tier1.RNG[1]) # Get random stat allocation
+		upgrade_value = rng.randi_range(upgrades.tier1.RNG[0], upgrades.tier1.RNG[1]) # Get random stat allocation
 		upgrade_value = stepify(upgrade_value, 0.1) # Round to one decimial'
 	elif upgrade_type == "RoF":
 		upgrade_value = rand_range(upgrades.tier1.RoF[0], upgrades.tier1.RoF[1]) # Get random stat allocation

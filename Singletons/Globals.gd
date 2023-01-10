@@ -13,6 +13,13 @@ var enemy_debuffs = {
 		"dot": 3,
 		"speed_modifier": .5,
 		"effect_color": Color("2560a4")
+		},
+	"Burning": {
+		"permanent": false,
+		"timeout": 1,
+		"dot": 3,
+		"speed_modifier": .5,
+		"effect_color": Color("2560a4")
 		}
 	}
 	
@@ -75,6 +82,13 @@ var towers_dict = {
 		"tower_asset": preload("res://Assets/Towers/IceTower.png")
 		}
 	}
+
+# Expects to see the name of a tower that is declared in the towers_dict dictionary 
+func add_tower(tower):
+	GameData.towers[tower] = Globals.towers_dict[tower]
+#	GameData.towers["FireTower"] = Globals.towers_dict["FireTower"]   
+	ui.add_towers_to_ui()
+	gamescene.add_towers_to_gamescene()
 
 func simple_timer(time):
 	yield(get_tree().create_timer(time), "timeout")
